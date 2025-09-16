@@ -1,5 +1,6 @@
 /* src/HomePage.css */
 
+/* --- Main Homepage Styles --- */
 .hero-section {
   display: flex;
   align-items: center;
@@ -53,7 +54,7 @@
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  box-sizing: border-box; /* Important for padding */
+  box-sizing: border-box;
 }
 
 .dropdown-list {
@@ -81,7 +82,7 @@
 
 .search-button {
   width: 100%;
-  background-color: #f05d23; /* Railyatri-like orange color */
+  background-color: #f05d23;
   color: white;
   border: none;
   padding: 15px;
@@ -95,14 +96,21 @@
 .search-button:hover {
   background-color: #d84a10;
 }
-/* Add this new class to the bottom of src/HomePage.css */
 
-.live-map-link {
+
+/* --- Global Top-Right Buttons --- */
+.top-bar-buttons {
   position: fixed;
   top: 20px;
   right: 20px;
+  z-index: 10;
+  display: flex;
+  gap: 10px;
+}
+
+.live-map-link,
+.language-switcher {
   background-color: rgba(255, 255, 255, 0.9);
-  color: #007bff;
   border: 1px solid #ddd;
   padding: 10px 20px;
   font-size: 16px;
@@ -111,11 +119,92 @@
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   text-decoration: none;
-  z-index: 10;
   transition: all 0.2s;
 }
 
-.live-map-link:hover {
+.live-map-link:hover,
+.language-switcher:hover {
   background-color: #fff;
   transform: translateY(-2px);
 }
+
+.live-map-link {
+  color: #007bff;
+}
+
+.language-switcher {
+  color: #333;
+}
+
+
+/* --- Styles for the Results Page --- */
+.results-page-container {
+  padding: 40px;
+  padding-top: 80px;
+  background-color: #f4f7f6;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.back-link {
+  font-weight: bold;
+  color: #007bff;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.results-card {
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+.results-card h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.results-header, .results-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
+  gap: 15px;
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+}
+
+.results-header {
+  font-weight: bold;
+  color: #555;
+  background-color: #f9f9f9;
+}
+
+.results-row {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.results-row:hover {
+  background-color: #f0f8ff;
+}
+
+.route-title {
+  text-align: center;
+  font-size: 1.3em;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 30px;
+  font-style: italic;
+  color: #777;
+}
+

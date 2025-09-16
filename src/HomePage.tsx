@@ -1,69 +1,122 @@
 // src/HomePage.tsx
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './HomePage.css';
 
-interface HomePageProps {
-  onOpenMap: () => void;
-  onTrackBus: (from: string, to: string) => void;
-}
+const HomePage: React.FC = () => {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
-const HomePage: React.FC<HomePageProps> = ({ onOpenMap, onTrackBus }) => {
+  // State for the FINAL selected values (the keys)
   const [fromStand, setFromStand] = useState('');
   const [toStand, setToStand] = useState('');
+
+  // NEW: State for the user's LIVE TEXT INPUT
+  const [fromInput, setFromInput] = useState('');
+  const [toInput, setToInput] = useState('');
+
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
-  // UPDATED: Ensure this list matches the data in App.tsx
-  const busStands = ["Kayamkulam", "Karunagapalli", "Oachira", "Vallikavu"];
+  const busStands = [
+    "Kollam", "Karunagappally", "Kayamkulam", "Chavara", "Oachira",
+    "Paravur", "Punalur", "Kottarakkara", "Pathanapuram", "Sasthamkotta"
+  ];
 
-  // ... the rest of your HomePage.tsx code remains the same ...
-  // (handleSelectStand, handleSearch, and the return JSX)
-  const handleSelectStand = (stand: string) => {
-    if (activeDropdown === 'from') setFromStand(stand);
-    else if (activeDropdown === 'to') setToStand(stand);
-    setActiveDropdown(null);
+  const handleSelectStand = (standKey: string) => {
+    if (activeDropdown === 'from') {
+      setFromStand(standKey); // Set the final value
+      setFromInput(t(standKey)); // Update the input field with the full, translated name
+    } else if (activeDropdown === 'to') {
+      setToStand(standKey); // Set the final value
+      setToInput(t(standKey)); // Update the input field with the full, translated name
+    }
+    setActiveDropdown(null); // Close the dropdown
   };
-  
-  const handleSearch = () => {
+
+  const handleSearchClick = () => {
     if (!fromStand || !toStand) {
-      alert("Please select both 'From' and 'To' stands.");
+      alert("Please select both 'From' and 'To' stands from the list.");
       return;
     }
-    onTrackBus(fromStand, toStand);
-  }
+    navigate(`/results?from=${encodeURIComponent(fromStand)}&to=${encodeURIComponent(toStand)}`);
+  };
 
   return (
     <div className="hero-section">
-      <button className="live-map-link" onClick={onOpenMap}>
-        Live Map
-      </button>
-
       <div className="search-card">
-        <h1>Live Bus Tracker</h1>
+        <h1>{t('liveBusTracker')}</h1>
         <div className="input-row">
           <div className="input-group">
-            <label htmlFor="from">FROM</label>
-            <input id="from" type="text" placeholder="Enter source stand" value={fromStand} onFocus={() => setActiveDropdown('from')} onChange={(e) => setFromStand(e.target.value)} />
+            <label htmlFor="from">{t('from')}</label>
+            <input
+              id="from"
+              type="text"
+              placeholder={t('enterSourceStand')}
+              value={fromInput} // Use the live input state for the value
+              onFocus={() => setActiveDropdown('from')}
+              // Update the input state as the user types
+              onChange={(e) => {
+                setFromInput(e.target.value);
+                setFromStand(''); // Clear final selection if user is typing again
+              }}
+              autoComplete="off"
+            />
             {activeDropdown === 'from' && (
               <div className="dropdown-list">
-                {busStands.filter(s => s.toLowerCase().includes(fromStand.toLowerCase())).map(s => <div key={s} className="dropdown-item" onClick={() => handleSelectStand(s)}>{s}</div>)}
+                {busStands
+                  // THIS IS THE NEW FILTER LOGIC
+                  .filter(standKey => 
+                    t(standKey).toLowerCase().includes(fromInput.toLowerCase())
+                  )
+                  .map((standKey) => (
+                    <div key={standKey} className="dropdown-item" onClick={() => handleSelectStand(standKey)}>
+                      {t(standKey)}
+                    </div>
+                  ))}
               </div>
             )}
           </div>
+
           <div className="input-group">
-            <label htmlFor="to">TO</label>
-            <input id="to" type="text" placeholder="Enter destination stand" value={toStand} onFocus={() => setActiveDropdown('to')} onChange={(e) => setToStand(e.target.value)} />
+            <label htmlFor="to">{t('to')}</label>
+            <input
+              id="to"
+              type="text"
+              placeholder={t('enterDestinationStand')}
+              value={toInput} // Use the live input state for the value
+              onFocus={() => setActiveDropdown('to')}
+              // Update the input state as the user types
+              onChange={(e) => {
+                setToInput(e.target.value)
+                setToStand(''); // Clear final selection if user is typing again
+              }}
+              autoComplete="off"
+            />
             {activeDropdown === 'to' && (
               <div className="dropdown-list">
-                {busStands.filter(s => s.toLowerCase().includes(toStand.toLowerCase())).map(s => <div key={s} className="dropdown-item" onClick={() => handleSelectStand(s)}>{s}</div>)}
+                {busStands
+                  // THIS IS THE NEW FILTER LOGIC
+                  .filter(standKey => 
+                    t(standKey).toLowerCase().includes(toInput.toLowerCase())
+                  )
+                  .map((standKey) => (
+                    <div key={standKey} className="dropdown-item" onClick={() => handleSelectStand(standKey)}>
+                      {t(standKey)}
+                    </div>
+                  ))}
               </div>
             )}
           </div>
         </div>
-        <button className="search-button" onClick={handleSearch}>Track Bus</button>
+        <button className="search-button" onClick={handleSearchClick}>
+          {t('showAvailableBuses')}
+        </button>
       </div>
     </div>
   );
 };
 
 export default HomePage;
+

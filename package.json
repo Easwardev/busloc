@@ -11,10 +11,14 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@mapbox/polyline": "^1.2.1",
+    "i18next": "^25.5.2",
     "leaflet": "^1.9.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-leaflet": "^4.2.1"
+    "react-i18next": "^15.7.3",
+    "react-leaflet": "^4.2.1",
+    "react-router-dom": "^7.9.1"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.20",
@@ -23,6 +27,6 @@
     "@vitejs/plugin-react": "^4.0.0",
     "gh-pages": "^5.0.0",
     "typescript": "^5.2.2",
-    "vite": "^5.4.20"
+    "vite": "^7.1.5"
   }
 }
