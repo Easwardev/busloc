@@ -1,69 +1,47 @@
-# React + TypeScript + Vite
+# Busloc - Kollam Live Bus Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Website:** [https://buslocc.netlify.app/]
 
-Currently, two official plugins are available:
+A real-time bus tracking application for the Kollam district in Kerala. This web app allows users to select a starting and destination bus stand and view a list of scheduled services. Users can then click on a specific service to see an animated, road-accurate route on an interactive map.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The entire application supports both English and Malayalam languages.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Key Features
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* **Route Search:** Select "From" and "To" locations from a filterable dropdown list.
+* **Bus Schedule:** View a list of available buses for the selected route with departure and arrival times.
+* **Interactive Map:** Click on a bus service to view its route animated on a map, complete with a custom bus icon and an ETA display.
+* **Dynamic Routing:** Uses the OSRM (Open Source Routing Machine) API to generate highly accurate, road-following paths in real-time.
+* **Bilingual Support:** Full support for both English and Malayalam, with a simple toggle to switch between languages.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+* **Front-End:** React, TypeScript, Vite
+* **Mapping:** Leaflet.js
+* **Routing Engine:** OSRM API
+* **Styling:** CSS
+* **Deployment:** Netlify (via GitHub Actions)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### How to Run This Project Locally
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/Easwardev/busloc.git](https://github.com/Easwardev/busloc.git)
+    ```
+2.  **Navigate to the project directory:**
+    ```bash
+    cd busloc
+    ```
+3.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+The application will be available at `http://localhost:5173`.
